@@ -1,3 +1,4 @@
+    #adminka
     @extends('layouts.app')
   
     @section('content')
@@ -59,3 +60,21 @@
     @endforeach
     </table>
     @endsection
+    #web.php
+    <?php
+    
+    use Illuminate\Support\Facades\Route;
+    
+    Route::middleware('auth')->get('/', function () {
+        return view('create');
+    });
+    
+    Auth::routes();
+    
+    
+    Route::middleware('auth')->get('/create', [App\Http\Controllers\HomeController::class, 'create'])->name('create');
+    
+    Route::middleware('auth')->post('/create_statem',  [App\Http\Controllers\HomeController::class, 'create_statem'])->name('create_statem');
+    Route::middleware('auth')->get('/statements',  [App\Http\Controllers\HomeController::class, 'statements'])->name('statements');
+    Route::middleware('admin')->get('/admin', [App\Http\Controllers\AdminController::class, 'admin'])->name('admin');
+    Route::middleware('admin')->post('/admin/{id}', [App\Http\Controllers\AdminController::class, 'changeStatus'])->name('change');
